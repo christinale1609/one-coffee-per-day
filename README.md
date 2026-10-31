@@ -90,3 +90,4 @@ docs/                      Product brief and interview guide for the assignment
 - We never scrape LinkedIn or send messages on anyone's behalf. People come from public search results, and users send every note themselves.
 - Research briefs stick to public, professional information and cite their sources.
 - The UI says what the AI can get wrong, at the point where it matters.
+- **Privacy mode** for demos and screen sharing: add `?privacy=on` to any URL and other people's names show as "First L." (including inside research briefs). `?privacy=off` turns it off.

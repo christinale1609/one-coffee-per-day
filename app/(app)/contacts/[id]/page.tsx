@@ -10,6 +10,7 @@ import { PrepBrief } from "@/components/prep-brief";
 import { StatusSelect, updateStatus } from "@/components/status-select";
 import { Badge, Button, Card, Field, Input, Spinner, Textarea } from "@/components/ui";
 import { daysSince, firstName, track } from "@/lib/client";
+import { displayName, maskName } from "@/lib/privacy";
 import { createClient } from "@/lib/supabase/client";
 import type { Contact } from "@/lib/types";
 
@@ -79,7 +80,7 @@ export default function ContactPage() {
       <Card className="mb-6">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
           <div>
-            <h1 className="font-display text-2xl font-semibold">{c.full_name}</h1>
+            <h1 className="font-display text-2xl font-semibold">{displayName(c.full_name)}</h1>
             <p className="text-sm text-roast">{c.headline}</p>
             <p className="text-xs text-mocha">{[c.company, c.location].filter(Boolean).join(" · ")}</p>
           </div>
@@ -164,10 +165,10 @@ export default function ContactPage() {
                   ))}
                 </div>
               )}
-              <p className="text-sm leading-relaxed text-roast">{c.why}</p>
+              <p className="text-sm leading-relaxed text-roast">{maskName(c.why, c.full_name)}</p>
               {c.conversation_hook && (
                 <p className="mt-2 text-xs text-mocha">
-                  <span className="font-medium text-roast">Ask about:</span> {c.conversation_hook}
+                  <span className="font-medium text-roast">Ask about:</span> {maskName(c.conversation_hook, c.full_name)}
                 </p>
               )}
             </Card>

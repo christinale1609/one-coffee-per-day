@@ -8,6 +8,7 @@ import { MessageComposer } from "@/components/message-composer";
 import { Badge, Button, Card, cn, ErrorNote, PageHeader, Spinner } from "@/components/ui";
 import { postJSON, track } from "@/lib/client";
 import { LINKEDIN_SEARCH_URL } from "@/lib/constants";
+import { displayName, maskName } from "@/lib/privacy";
 import { createClient } from "@/lib/supabase/client";
 import type { Contact, SearchIdea, Suggestion } from "@/lib/types";
 
@@ -151,7 +152,7 @@ export default function DiscoverPage() {
               <Card key={c.id}>
                 <div className="mb-3">
                   <Link href={`/contacts/${c.id}`} className="font-semibold hover:underline">
-                    {c.full_name}
+                    {displayName(c.full_name)}
                   </Link>
                   <p className="text-sm text-mocha">{c.headline}</p>
                 </div>
@@ -292,7 +293,7 @@ function SuggestionCard({
         <div className="min-w-0 flex-1">
           <div className="flex items-start justify-between gap-2">
             <div className="min-w-0">
-              <p className="font-semibold">{s.full_name}</p>
+              <p className="font-semibold">{displayName(s.full_name)}</p>
               <p className="text-sm text-roast">{s.headline}</p>
               <p className="text-xs text-mocha">{[s.company, s.location].filter(Boolean).join(" · ")}</p>
             </div>
@@ -320,10 +321,10 @@ function SuggestionCard({
               ))}
             </div>
           )}
-          <p className="mt-3 text-sm leading-relaxed text-roast">{s.why}</p>
+          <p className="mt-3 text-sm leading-relaxed text-roast">{maskName(s.why, s.full_name)}</p>
           {s.conversation_hook && (
             <p className="mt-2 text-xs text-mocha">
-              <span className="font-medium text-roast">Ask about:</span> {s.conversation_hook}
+              <span className="font-medium text-roast">Ask about:</span> {maskName(s.conversation_hook, s.full_name)}
             </p>
           )}
           <a

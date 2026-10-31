@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Public_Sans } from "next/font/google";
+import { PrivacyParam } from "@/components/privacy-param";
 import { APP_NAME, APP_TAGLINE } from "@/lib/constants";
 import "./globals.css";
 
@@ -16,7 +17,10 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className={`${publicSans.variable} h-full antialiased`}>
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        <PrivacyParam />
+        {children}
+      </body>
     </html>
   );
 }

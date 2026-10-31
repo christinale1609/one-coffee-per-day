@@ -8,6 +8,7 @@ import { Badge, Button, Card, ErrorNote, Field, Input, PageHeader, Spinner, Text
 import { daysSince, track } from "@/lib/client";
 import { CLOSED, PIPELINE, statusLabel } from "@/lib/constants";
 import { canonicalLinkedinUrl } from "@/lib/linkedin";
+import { displayName } from "@/lib/privacy";
 import { createClient } from "@/lib/supabase/client";
 import type { Contact } from "@/lib/types";
 
@@ -107,7 +108,7 @@ function ContactCard({ contact: c, onChange }: { contact: Contact; onChange: (c:
   return (
     <div className="rounded-xl border border-latte bg-paper p-3">
       <Link href={`/contacts/${c.id}`} className="block">
-        <p className="font-medium leading-snug hover:underline">{c.full_name}</p>
+        <p className="font-medium leading-snug hover:underline">{displayName(c.full_name)}</p>
         <p className="line-clamp-2 text-xs text-mocha">{c.headline || c.company}</p>
       </Link>
       <div className="mt-2 flex flex-wrap gap-1">

@@ -4,6 +4,7 @@ import { Check, Copy, ExternalLink, Info, RefreshCw, Sparkles } from "lucide-rea
 import { useEffect, useState } from "react";
 import { Button, Card, ErrorNote, Spinner } from "@/components/ui";
 import { firstName, postJSON, track } from "@/lib/client";
+import { maskName } from "@/lib/privacy";
 import type { Contact, ResearchBrief } from "@/lib/types";
 
 const LOADING_STEPS = [
@@ -19,6 +20,7 @@ export function PrepBrief({ contact, onContactChange }: { contact: Contact; onCo
   const [error, setError] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
   const brief = contact.research;
+  const m = (text: string) => maskName(text, contact.full_name);
 
   useEffect(() => {
     if (!loading) return;
@@ -91,14 +93,14 @@ export function PrepBrief({ contact, onContactChange }: { contact: Contact; onCo
       </div>
 
       <Section title="Snapshot">
-        <p className="text-sm leading-relaxed text-roast">{brief.snapshot}</p>
+        <p className="text-sm leading-relaxed text-roast">{m(brief.snapshot)}</p>
       </Section>
 
       {brief.career_path.length > 0 && (
         <Section title="Career path">
           <ol className="flex flex-col gap-1.5 border-l-2 border-latte pl-4 text-sm text-roast">
             {brief.career_path.map((step) => (
-              <li key={step}>{step}</li>
+              <li key={step}>{m(step)}</li>
             ))}
           </ol>
         </Section>
@@ -111,12 +113,12 @@ export function PrepBrief({ contact, onContactChange }: { contact: Contact; onCo
               <li key={a.title} className="text-sm">
                 {a.url ? (
                   <a href={a.url} target="_blank" rel="noopener noreferrer" className="font-medium text-sky hover:underline">
-                    {a.title} <ExternalLink className="inline size-3" aria-hidden />
+                    {m(a.title)} <ExternalLink className="inline size-3" aria-hidden />
                   </a>
                 ) : (
-                  <span className="font-medium">{a.title}</span>
+                  <span className="font-medium">{m(a.title)}</span>
                 )}
-                <p className="text-roast">{a.takeaway}</p>
+                <p className="text-roast">{m(a.takeaway)}</p>
               </li>
             ))}
           </ul>
@@ -127,7 +129,7 @@ export function PrepBrief({ contact, onContactChange }: { contact: Contact; onCo
         <Section title="Talking points">
           <ul className="list-disc space-y-1 pl-5 text-sm text-roast">
             {brief.talking_points.map((t) => (
-              <li key={t}>{t}</li>
+              <li key={t}>{m(t)}</li>
             ))}
           </ul>
         </Section>
@@ -151,8 +153,8 @@ export function PrepBrief({ contact, onContactChange }: { contact: Contact; onCo
                   .filter((q) => q.category === cat)
                   .map((q) => (
                     <li key={q.question} className="rounded-xl bg-foam/60 px-3 py-2">
-                      <p className="text-sm font-medium">{q.question}</p>
-                      <p className="mt-0.5 text-xs text-mocha">{q.why}</p>
+                      <p className="text-sm font-medium">{m(q.question)}</p>
+                      <p className="mt-0.5 text-xs text-mocha">{m(q.why)}</p>
                     </li>
                   ))}
               </ul>
@@ -165,7 +167,7 @@ export function PrepBrief({ contact, onContactChange }: { contact: Contact; onCo
         <Section title="Steer clear of">
           <ul className="list-disc space-y-1 pl-5 text-sm text-roast">
             {brief.avoid.map((t) => (
-              <li key={t}>{t}</li>
+              <li key={t}>{m(t)}</li>
             ))}
           </ul>
         </Section>
@@ -177,7 +179,7 @@ export function PrepBrief({ contact, onContactChange }: { contact: Contact; onCo
             {brief.sources.map((s) => (
               <li key={s.url}>
                 <a href={s.url} target="_blank" rel="noopener noreferrer" className="text-sky hover:underline">
-                  {s.title || s.url}
+                  {m(s.title) || s.url}
                 </a>
               </li>
             ))}
