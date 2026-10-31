@@ -116,7 +116,7 @@ export default function DashboardPage() {
         </div>
         <Link
           href={next.href}
-          className="inline-flex h-10 shrink-0 items-center justify-center gap-2 rounded-full bg-crema px-5 text-sm font-medium text-white hover:bg-crema-dark"
+          className="inline-flex h-10 shrink-0 items-center justify-center gap-2 rounded-full bg-paper px-5 text-sm font-medium text-espresso hover:bg-foam"
         >
           {next.cta} <ArrowRight className="size-4" aria-hidden />
         </Link>

@@ -7,9 +7,23 @@ export function cn(...classes: (string | false | null | undefined)[]) {
   return classes.filter(Boolean).join(" ");
 }
 
+// Tailwind can't tell which of two classes for the same property should win (e.g. a
+// default `w-full` and a caller's `w-auto`), so drop defaults the caller overrides.
+const OVERRIDABLE = [/^w-/, /^h-/, /^bg-/, /^p-\d/, /^text-(xs|sm|base|lg|[2-9]?xl)$/];
+
+function withDefaults(defaults: string, className?: string) {
+  const own = className?.split(/\s+/).filter(Boolean) ?? [];
+  const kept = defaults.split(/\s+/).filter((d) => {
+    const group = OVERRIDABLE.find((re) => re.test(d));
+    return !group || !own.some((c) => group.test(c));
+  });
+  return cn(...kept, className);
+}
+
 const BUTTON_VARIANTS = {
   primary: "bg-espresso text-cream hover:bg-roast",
   accent: "bg-crema text-white hover:bg-crema-dark",
+  light: "bg-paper text-espresso hover:bg-foam",
   secondary: "bg-paper text-espresso border border-latte hover:bg-foam",
   ghost: "text-roast hover:bg-foam",
   danger: "text-berry hover:bg-berry-soft",
@@ -33,7 +47,7 @@ export function Button({
       {...props}
       disabled={disabled || loading}
       className={cn(
-        "inline-flex items-center justify-center gap-2 rounded-full font-medium transition-colors",
+        "inline-flex shrink-0 items-center justify-center gap-2 whitespace-nowrap rounded-full font-medium transition-colors",
         "disabled:cursor-not-allowed disabled:opacity-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-crema",
         size === "sm" && "h-8 px-3 text-sm",
         size === "md" && "h-10 px-4 text-sm",
@@ -50,7 +64,12 @@ export function Button({
 
 export function Card({ className, children }: { className?: string; children: ReactNode }) {
   return (
-    <div className={cn("rounded-2xl border border-latte bg-paper p-5 shadow-[0_1px_2px_rgba(42,26,18,0.04)]", className)}>
+    <div
+      className={withDefaults(
+        "rounded-2xl border border-latte bg-paper p-5 shadow-[0_1px_2px_rgba(11,29,58,0.04)]",
+        className,
+      )}
+    >
       {children}
     </div>
   );
@@ -99,15 +118,15 @@ const CONTROL =
   "w-full rounded-xl border border-latte bg-paper px-3 text-sm text-espresso placeholder:text-mocha/70 focus:border-crema focus:outline-none focus:ring-2 focus:ring-crema/20";
 
 export function Input(props: React.InputHTMLAttributes<HTMLInputElement>) {
-  return <input {...props} className={cn(CONTROL, "h-10", props.className)} />;
+  return <input {...props} className={withDefaults(`${CONTROL} h-10`, props.className)} />;
 }
 
 export function Textarea(props: React.TextareaHTMLAttributes<HTMLTextAreaElement>) {
-  return <textarea {...props} className={cn(CONTROL, "py-2 leading-relaxed", props.className)} />;
+  return <textarea {...props} className={withDefaults(`${CONTROL} py-2 leading-relaxed`, props.className)} />;
 }
 
 export function Select(props: React.SelectHTMLAttributes<HTMLSelectElement>) {
-  return <select {...props} className={cn(CONTROL, "h-10 pr-8", props.className)} />;
+  return <select {...props} className={withDefaults(`${CONTROL} h-10 pr-8`, props.className)} />;
 }
 
 /** Free-text chips: type and press Enter (or comma) to add; click × to remove. */

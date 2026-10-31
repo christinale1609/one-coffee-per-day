@@ -1,25 +1,27 @@
 @import "tailwindcss";
 
+/* Navy and white theme. Token names are from the original coffee palette:
+   espresso = darkest navy (text, dark buttons), crema = brand navy accent. */
 @theme {
-  --color-cream: #fbf6ef;
+  --color-cream: #f5f7fb;
   --color-paper: #ffffff;
-  --color-foam: #f4ece1;
-  --color-latte: #e6d5bf;
-  --color-mocha: #8a6a55;
-  --color-roast: #5b3a29;
-  --color-espresso: #2a1a12;
-  --color-crema: #c7772e;
-  --color-crema-dark: #a95f1e;
-  --color-sage: #3f7a52;
-  --color-sage-soft: #e3efe5;
+  --color-foam: #edf1f7;
+  --color-latte: #d8e0ec;
+  --color-mocha: #5d6b84;
+  --color-roast: #2f3d58;
+  --color-espresso: #0b1d3a;
+  --color-crema: #2a4f99;
+  --color-crema-dark: #1e3d7d;
+  --color-sage: #2f7a4f;
+  --color-sage-soft: #e3f1e8;
   --color-berry: #b4443a;
   --color-berry-soft: #f8e4e1;
-  --color-sky: #3e6a8a;
-  --color-sky-soft: #e2edf5;
-  --color-honey-soft: #fbefd9;
+  --color-sky: #1f6f86;
+  --color-sky-soft: #e0f0f4;
+  --color-honey-soft: #e6edf8;
 
-  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
-  --font-display: var(--font-fraunces), ui-serif, Georgia, serif;
+  --font-sans: var(--font-public-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-public-sans), ui-sans-serif, system-ui, sans-serif;
 }
 
 :root {

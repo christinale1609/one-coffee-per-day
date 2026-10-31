@@ -243,7 +243,7 @@ export default function DiscoverPage() {
           <span className="text-sm">
             {selected.size} {selected.size === 1 ? "person" : "people"} selected
           </span>
-          <Button variant="accent" onClick={addSelected} loading={adding}>
+          <Button variant="light" onClick={addSelected} loading={adding}>
             <UserPlus className="size-4" aria-hidden /> Add to tracker & draft notes
           </Button>
         </div>

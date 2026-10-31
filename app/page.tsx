@@ -115,7 +115,7 @@ export default function Landing() {
 
         <section className="mx-auto max-w-6xl px-4 pb-16">
           <div className="grid gap-6 rounded-3xl bg-espresso p-8 text-cream md:grid-cols-[auto_1fr] md:p-10">
-            <ShieldCheck className="size-10 text-crema" aria-hidden />
+            <ShieldCheck className="size-10 text-latte" aria-hidden />
             <div>
               <h2 className="font-display text-2xl font-semibold">We suggest. You decide.</h2>
               <ul className="mt-4 grid gap-3 text-sm leading-relaxed text-latte md:grid-cols-3">
